@@ -1,3 +1,5 @@
+#data file created used by Stata program 01-formatweather.do
+
 #Can you try to find information on  daily precipitation (total), and air temperature (preferably, temperature at like 1:00PM, but also average daily, high and low) for the following places and dates:
 # 
 #Avalon Beach, CA (Catalina Island): 26jul2007 - 31aug2008

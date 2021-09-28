@@ -1,4 +1,4 @@
-
+*see R programs 01-pre-WeatherforCABeaches.R
 
 import delimited using "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\CAbeachesWeather.csv", clear
 qui bysort beach date: gen count=_N
