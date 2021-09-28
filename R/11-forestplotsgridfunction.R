@@ -1,3 +1,5 @@
+#create grid facet plots
+#corrected label- over 18 to 18 and over
 
 rm(list=ls())
 library(data.table)
@@ -11,7 +13,7 @@ library(tidyr)
 
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
-#all ages, over 18, 12, 10 and 8
+#all ages, 18 and over, 12, 10 and 8
 forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
@@ -24,7 +26,7 @@ forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savenam
     geom_point(aes(color=age), size=3.2)+
     #scale_shape_manual(values=c(15,15,15, 15, 15, 15)) +
     scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen", "black"),
-                       labels=c("6 and under", "10 and under", "12 and under", "Over 18", "All ages"))+
+                       labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),

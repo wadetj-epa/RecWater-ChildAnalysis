@@ -1,3 +1,7 @@
+#miscellaneous forest plots
+#corrected label for 18 and over and 13 and over
+
+
 rm(list=ls())
 library(data.table)
 library(ggplot2)
@@ -19,7 +23,7 @@ comresultsage4<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agen
 
 site.labs=c('allsites'="All sites", 'neearall'="All NEEAR", 'neearcore'="Core NEEAR",
             'neearps'="NEEAR Point source", 'risknotropical'="Human source\n(no tropical)", 'risk'="Human source", 'notropical'="All sites\n(no tropical)")
-age.labs=c('age4'="4 and under", 'age6'="6 and under", 'age8'="8 and under", 'age10'="10 and under", 'age12'="12 and under", 'age13up'="Over 12", 'age18up'="Over 18", allages="All ages")
+age.labs=c('age4'="4 and under", 'age6'="6 and under", 'age8'="8 and under", 'age10'="10 and under", 'age12'="12 and under", 'age13up'="13 and over", 'age18up'="18 and over", allages="All ages")
 
 out.labs=c('diarrhea'="Diarrhea", 'hcgi'="NEEAR-GI", 'stomach'="Stomachache", 'vomiting'="Vomiting", 'nausea'="Nausea")
 
@@ -203,7 +207,7 @@ comresults %>%
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/giwater60pcr.pdf", scale=1.1, width=12, height=8)
 
 
-#needs to be tweaked some
+
 comresults %>%
   filter(ind=="cfu", Outcome=="hcgi"|Outcome=="diarrhea"|Outcome=="vomiting"|Outcome=="stomach", site=="neearcore"|site=="risknotropical", age=="age10"|age=="age6"|age=="allages"|age=="age8", exposure=="60 minutes") %>%
   ggplot(aes( x = Coef, y = Outcome, xmin=Lower, xmax=Upper)) +

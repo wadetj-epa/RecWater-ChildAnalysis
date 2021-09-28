@@ -20,7 +20,7 @@ forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, sa
     geom_point(aes(color=age), size=4, shape=15)+
     scale_shape_manual(values=c(15,15,15,15, 15, 15, 15)) +
     scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
-                       labels=c("6 and under", "8 and under", "10 and under", "12 and under", "Over 12", "Over 18", "All ages"))+
+                       labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
