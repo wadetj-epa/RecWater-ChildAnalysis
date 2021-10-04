@@ -1,5 +1,7 @@
 *add correct cuts which repeated rash
 * add groups for adults 13 and up, 18 and up
+* add non-human impacted site group (risk==0)
+
 
 capture program drop allchildmodels
 program define allchildmodels
@@ -11,7 +13,7 @@ if inlist("`illness'", "gi", "rash", "cut", "resp", "severegi")==0 {
     exit 198
 }
 
-if inlist("`subset'", "allsites", "risk", "risknotropical", "notropical", "neearall", "neearcore", "neearps")==0 {
+if inlist("`subset'", "allsites", "risk", "risknotropical", "notropical", "neearall", "neearcore", "neearps", "nonhuman")==0 {
 	display as err "option subset() invalid"
     exit 198
 }
@@ -186,6 +188,11 @@ set more off
 		
 		}
 			
+	if "`subset'"=="nonhuman" {
+
+		keep if risk==0
+		
+		}
 			
 	if "`agegroup'"=="age10" {
 
