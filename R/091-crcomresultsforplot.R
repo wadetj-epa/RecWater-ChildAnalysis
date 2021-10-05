@@ -1,6 +1,7 @@
 #format combined results for forest plots
 #see formatfiles.R for creation of csv files
 #creates RDS files for use in forest plots
+#re run to include nonhuman results
 
 
 #GI
