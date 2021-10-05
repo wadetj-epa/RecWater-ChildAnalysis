@@ -1,3 +1,5 @@
+*add non human site
+
 set more off
 capture log close
 capture clear
@@ -14,6 +16,7 @@ gen neearall=cond(!inlist(beachg, 1, 3, 9, 8), 1, 0)
 gen notropical=cond(beachg!=1, 1, 0)
 gen neearps=cond(!inlist(beachg, 1, 3, 9, 8, 11), 1, 0)
 gen neearcore=cond(!inlist(beachg, 1, 2, 3, 9, 8, 11), 1, 0)
+gen nonhuman=cond(risk==0, 1, 0)
 
 * all sites
 
@@ -140,6 +143,31 @@ tab diarrhea if neearcore==1
 tab severegi if  neearcore==1
 tab hcresp if  neearcore==1
 tab rash if  neearcore==1
+
+
+
+
+* nonhuman
+
+count if nonhuman==1
+count if age<=12 &  nonhuman==1
+count if age<=10 &  nonhuman==1
+count if age<=8 &  nonhuman==1
+count if age<=6 &  nonhuman==1
+count if age<=4 &  nonhuman==1
+tab anycontact if  nonhuman==1
+tab bodycontact if  nonhuman==1
+tab swallwater if  nonhuman==1
+tab water60 if  nonhuman==1
+tab water45 if  nonhuman==1
+tab water30 if  nonhuman==1
+tab hcgi if  nonhuman==1
+tab diarrhea if nonhuman==1
+tab severegi if  nonhuman==1
+tab hcresp if  nonhuman==1
+tab rash if  nonhuman==1
+
+
 
 log close
 
