@@ -1,6 +1,8 @@
 #need to set up data before running plots
 #RDS files created and formatted for plotting by crcomresultsforplot.R
 #cvs files saved by formatfiles.R
+#add non human to function
+#edit plots to have dots instead of box symbols
 
 rm(list=ls())
 library(data.table)
@@ -17,8 +19,7 @@ forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, sa
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
     ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
     geom_errorbar()+
-    geom_point(aes(color=age), size=4, shape=15)+
-    scale_shape_manual(values=c(15,15,15,15, 15, 15, 15)) +
+    geom_point(aes(color=age), size=4)+
     scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
                        labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
     scale_x_log10(breaks=ticks, labels = ticks) +
@@ -51,7 +52,7 @@ ticks<-c(seq(.1, 1.9, by =.1), seq(2, 3.8, by=.2), seq(4, 9.5, by=0.5), seq(10, 
 
 indlist<-c("cfu", "pcr")
 outlist<-c("hcgi", "diarrhea", "nausea", "stomach", "vomiting")
-sitelist<-c("allsites", "risk", "neearall", "risknotropical", "neearps", "neearcore")
+sitelist<-c("allsites", "risk", "neearall", "risknotropical", "neearps", "neearcore", "nonhuman")
 rm(list=c("i","j","k")) 
 
 
@@ -83,7 +84,7 @@ ticks<-c(seq(.1, 1.9, by =.1), seq(2, 3.8, by=.2), seq(4, 9.5, by=0.5), seq(10, 
 
 indlist<-c("cfu", "pcr")
 outlist<-c("cough", "cold", "hcresp", "sorethroat")
-sitelist<-c("allsites", "risk", "neearall", "risknotropical", "neearps", "neearcore")
+sitelist<-c("allsites", "risk", "neearall", "risknotropical", "neearps", "neearcore", "nonhuman")
 rm(list=c("i","j","k")) 
 
 
@@ -143,7 +144,7 @@ ticks<-c(seq(.1, 1.9, by =.1), seq(2, 3.8, by=.2), seq(4, 9.5, by=0.5), seq(10, 
 
 indlist<-c("cfu", "pcr")
 outlist<-c("rash")
-sitelist<-c("allsites", "risk", "neearall", "risknotropical", "neearps", "neearcore")
+sitelist<-c("allsites", "risk", "neearall", "risknotropical", "neearps", "neearcore", "nonhuman")
 rm(list=c("i","j","k")) 
 
 
