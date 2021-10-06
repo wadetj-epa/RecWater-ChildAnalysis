@@ -188,6 +188,7 @@ comresults %>%
   facet_grid(.~site, switch = "x", labeller=labeller(site=site.labs))+
   theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
   guides(color=guide_legend("Exposure"))
+
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage10altnonhuman.pdf", scale=1.1, width=12, height=8)
 
 
@@ -208,9 +209,6 @@ comresults %>%
   theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
   guides(color=guide_legend("Exposure"))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage10alt.pdf", scale=1.1, width=12, height=8)
-
-
-
 
 ticks<-c(seq(.1, 1.9, by =.1), seq(2, 3.8, by=.2), seq(4, 9.5, by=0.5), seq(10, 100, by =10))
 
@@ -248,7 +246,7 @@ comresults %>%
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey"), labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   #scale_fill_discrete(name="Test", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
-  scale_color_brewer(palette="Set1")+
+  scale_color_brewer(palette="Set1", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
   labs(y = "", x = "Odds Ratio") +
@@ -268,7 +266,7 @@ comresults %>%
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey"), labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   #scale_fill_discrete(name="Test", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
-  scale_color_brewer(palette="Set1")+
+  scale_color_brewer(palette="Set1", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
   labs(y = "", x = "Odds Ratio") +
