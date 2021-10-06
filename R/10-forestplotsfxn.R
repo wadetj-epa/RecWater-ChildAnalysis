@@ -3,6 +3,7 @@
 #cvs files saved by formatfiles.R
 #add non human to function
 #edit plots to have dots instead of box symbols
+#added alternate color schemes (forplotalt)
 
 rm(list=ls())
 library(data.table)
@@ -43,6 +44,39 @@ forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, sa
 }
 
 
+forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+  if(exists("p")) rm(p)
+  p<-dat %>%
+    filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
+    ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
+    geom_errorbar()+
+    geom_point(aes(color=age), size=4)+
+    #scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
+                       #labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+    scale_color_brewer(palette="Set1",labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+    scale_x_log10(breaks=ticks, labels = ticks) +
+    #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
+    #geom_pointrange(aes(xmin = Lower, xmax = Upper),
+    #               position = dodger,
+    #              size = .5) +
+    geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
+    labs(y = "", x = "Odds Ratio") +
+    theme_grey()+ 
+    facet_grid(exposure~., switch = "y")+
+    theme(axis.text.y=element_blank(), axis.ticks = element_blank(), axis.text.x=element_text(angle=45, hjust=1))+
+    guides(color=guide_legend("Age group", reverse=TRUE))
+  if(print==TRUE) print(p)
+  
+  if(save==TRUE) {
+    ggsave(savename, scale=savesize)
+  }
+  
+  rm(p)
+}
+
+
+
+
 comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
 
 dodger = position_dodge(width = 0.3)
@@ -64,10 +98,13 @@ for(i in 1:length(indlist)) {
     for(k in 1:length(sitelist)) {
    
   filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
+  filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="") 
    indtemp<-indlist[i]
    outtemp<-outlist[j]
    sitetemp<-sitelist[k]
    forplot(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+   forplotalt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+   
     }
   }
 }
@@ -96,11 +133,13 @@ for(i in 1:length(indlist)) {
     for(k in 1:length(sitelist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="") 
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
       forplot(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-    }
+      forplotalt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      }
   }
 }
 
@@ -125,11 +164,13 @@ for(i in 1:length(indlist)) {
     for(k in 1:length(sitelist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
       forplot(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-    }
+      forplotalt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      }
   }
 }
 
@@ -156,9 +197,12 @@ for(i in 1:length(indlist)) {
     for(k in 1:length(sitelist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="")   
+      
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
+      forplotalt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
       forplot(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
     }
   }
