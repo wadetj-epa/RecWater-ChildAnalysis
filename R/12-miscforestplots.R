@@ -1,6 +1,6 @@
 #miscellaneous forest plots
 #corrected label for 18 and over and 13 and over
-
+# add plots comparing non human site
 
 rm(list=ls())
 library(data.table)
@@ -22,7 +22,7 @@ comresultsage4<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agen
   
 
 site.labs=c('allsites'="All sites", 'neearall'="All NEEAR", 'neearcore'="Core NEEAR",
-            'neearps'="NEEAR Point source", 'risknotropical'="Human source\n(no tropical)", 'risk'="Human source", 'notropical'="All sites\n(no tropical)")
+            'neearps'="NEEAR Point source", 'risknotropical'="Human source\n(no tropical)", 'risk'="Human source", 'notropical'="All sites\n(no tropical)", 'nonhuman'="Non-human source")
 age.labs=c('age4'="4 and under", 'age6'="6 and under", 'age8'="8 and under", 'age10'="10 and under", 'age12'="12 and under", 'age13up'="13 and over", 'age18up'="18 and over", allages="All ages")
 
 out.labs=c('diarrhea'="Diarrhea", 'hcgi'="NEEAR-GI", 'stomach'="Stomachache", 'vomiting'="Vomiting", 'nausea'="Nausea")
@@ -87,7 +87,7 @@ comresultsrespage4 %>%
 
 #age and site
 comresultsage4 %>%
-  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
+  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical" & site!="nonhuman") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
   geom_point(aes(color=site), size=4)+
@@ -103,6 +103,122 @@ comresultsage4 %>%
   guides(color=guide_legend("Site"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbody.pdf", scale=1.1, width=12, height=8)
+
+
+
+#age and site- with non-human
+comresultsage4 %>%
+  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
+  ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
+  geom_errorbar()+
+  geom_point(aes(color=site), size=4)+
+  scale_shape_manual(values=c(15,15,15, 15, 15)) +
+  scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
+                    labels=c(site.labs))+
+  #scale_color_brewer(palette="Set1",labels=c(site.labs))+
+                     
+  scale_y_log10(breaks=ticks, labels = ticks) +
+  geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+  labs(x = "", y = "Odds Ratio") +
+  theme_bw()+
+  facet_grid(.~age, switch = "x", labeller=labeller(age=age.labs))+
+  theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
+  guides(color=guide_legend("Site"))
+
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbody-nonhuman.pdf", scale=1.1, width=12, height=8)
+
+
+
+#age and site- with non-human- alt color
+comresultsage4 %>%
+  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
+  ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
+  geom_errorbar()+
+  geom_point(aes(color=site), size=4)+
+  #scale_shape_manual(values=c(15,15,15, 15, 15)) +
+  #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
+  #  labels=c(site.labs))+
+  scale_color_brewer(palette="Set1",labels=c(site.labs))+
+  
+  scale_y_log10(breaks=ticks, labels = ticks) +
+  geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+  labs(x = "", y = "Odds Ratio") +
+  theme_bw()+
+  facet_grid(.~age, switch = "x", labeller=labeller(age=age.labs))+
+  theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
+  guides(color=guide_legend("Site"))
+
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset1.pdf", scale=1.1, width=12, height=8)
+
+
+#age and site- with non-human- alt color
+comresultsage4 %>%
+  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
+  ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
+  geom_errorbar()+
+  geom_point(aes(color=site), size=4)+
+  #scale_shape_manual(values=c(15,15,15, 15, 15)) +
+  #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
+  #  labels=c(site.labs))+
+  scale_color_brewer(palette="Dark2",labels=c(site.labs))+
+  
+  scale_y_log10(breaks=ticks, labels = ticks) +
+  geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+  labs(x = "", y = "Odds Ratio") +
+  theme_bw()+
+  facet_grid(.~age, switch = "x", labeller=labeller(age=age.labs))+
+  theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
+  guides(color=guide_legend("Site"))
+
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumandark2.pdf", scale=1.1, width=12, height=8)
+
+
+
+#age and site- with non-human- alt color
+comresultsage4 %>%
+  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
+  ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
+  geom_errorbar()+
+  geom_point(aes(color=site), size=4)+
+  #scale_shape_manual(values=c(15,15,15, 15, 15)) +
+  #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
+  #  labels=c(site.labs))+
+  scale_color_brewer(palette="Set2",labels=c(site.labs))+
+  
+  scale_y_log10(breaks=ticks, labels = ticks) +
+  geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+  labs(x = "", y = "Odds Ratio") +
+  theme_bw()+
+  facet_grid(.~age, switch = "x", labeller=labeller(age=age.labs))+
+  theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
+  guides(color=guide_legend("Site"))
+
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset2.pdf", scale=1.1, width=12, height=8)
+
+
+
+
+#age and site- with non-human- alt color
+comresultsage4 %>%
+  filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
+  ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
+  geom_errorbar()+
+  geom_point(aes(color=site), size=4)+
+  #scale_shape_manual(values=c(15,15,15, 15, 15)) +
+  #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
+  #  labels=c(site.labs))+
+  scale_color_brewer(palette="Set1",labels=c(site.labs))+
+  
+  scale_y_log10(breaks=ticks, labels = ticks) +
+  geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+  labs(x = "", y = "Odds Ratio") +
+  theme_grey()+
+  facet_grid(.~age, switch = "x", labeller=labeller(age=age.labs))+
+  theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
+  guides(color=guide_legend("Site"))
+
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset1grey.pdf", scale=1.1, width=12, height=8)
+
 
 
 
