@@ -1,8 +1,14 @@
+library(data.table)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+
 #format combined results for forest plots
 #see formatfiles.R for creation of csv files
 #creates RDS files for use in forest plots
 #re run to include nonhuman results
-
+#add age 4 to severe GI
 
 #GI
 comresults <- fread("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.csv", stringsAsFactors = FALSE)
@@ -178,6 +184,46 @@ saveRDS(comresultsrespage4, "C:/Users/twade/OneDrive - Environmental Protection 
 
 
 
+#severegi - with age 4   
+comresultseveregiage4 <- fread("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.csv", stringsAsFactors = FALSE)
+
+#comresults$age <- factor(comresults$age,
+#                         levels = c("age4", "age6", "age8", "age10", "age12", "allages"),
+#                         ordered = TRUE, labels=c("4 and under", "6 and under", "10 and under", "12 and under", "All ages"))
+
+setnames(comresultseveregiage4, "...1", "Outcome")
+setnames(comresultseveregiage4, "Upper CI", "Upper")
+setnames(comresultseveregiage4, "Lower CI", "Lower")
+setnames(comresultseveregiage4, "Coef.", "Coef")
+
+comresultseveregiage4$age <- factor(comresultseveregiage4$age,
+                                levels = c("age4", "age6", "age8", "age10", "age12", "age13up", "age18up", "allages"))
+#ordered = TRUE)
+#drop age group 4 and under
+#comresultseveregiage4<-filter(comresultseveregiage4, age!="age4")
+
+comresultseveregiage4$exposurecat <- NA
+comresultseveregiage4$exposurecat<-ifelse(grepl("swallwater", comresultseveregiage4$command), "swallwater", NA)
+comresultseveregiage4$exposurecat1<-ifelse(grepl("anycontact", comresultseveregiage4$command), "anycontact", NA)
+comresultseveregiage4$exposurecat2<-ifelse(grepl("bodycontact", comresultseveregiage4$command), "bodycontact", NA)
+comresultseveregiage4$exposurecat3<-ifelse(grepl("water30", comresultseveregiage4$command), "water30", NA)
+comresultseveregiage4$exposurecat4<-ifelse(grepl("water45", comresultseveregiage4$command), "water45", NA)
+comresultseveregiage4$exposurecat5<-ifelse(grepl("water60", comresultseveregiage4$command), "water60", NA)
+
+
+comresultseveregiage4 <- unite(comresultseveregiage4, exposure,c(exposurecat:exposurecat5), na.rm = TRUE, remove = TRUE)
+
+
+comresultseveregiage4$exposure <- factor(comresultseveregiage4$exposure,
+                                     levels = c("anycontact", "bodycontact", "swallwater", "water30", "water45", "water60"),
+                                     labels = c("Any contact", "Body immersion", "Swallowed water", "30 minutes", "45 minutes", "60 minutes"))
+
+#drop 45 minutes in water
+
+comresultseveregiage4<-filter(comresultseveregiage4, exposure!="45 minutes")
+saveRDS(comresultseveregiage4, "C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregiage4.rds")
+
+
 #severegi    
 comresultseveregi <- fread("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.csv", stringsAsFactors = FALSE)
 
@@ -216,6 +262,12 @@ comresultseveregi$exposure <- factor(comresultseveregi$exposure,
 
 comresultseveregi<-filter(comresultseveregi, exposure!="45 minutes")
 saveRDS(comresultseveregi, "C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.rds")
+
+
+
+
+
+
 
 #rash  
 comresultsrash <- fread("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsrash.csv", stringsAsFactors = FALSE)
