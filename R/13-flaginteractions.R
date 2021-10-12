@@ -37,12 +37,12 @@ giint$Indicator=ifelse(giint$Indicator=="avgdyentero1600", "cfu", "pcr")
 
 
 #filter significant effects for children
-sigeffs<-comresultseveregi %>%
+sigeffs<-comresultsGI%>%
   dplyr::filter(Coef>1,  p<0.05, Age!="age13up" & Age!="age18up" & Age!="allages")
 
 ints<-merge( sigeffs, giint, by=c("Outcome", "Indicator", "Age", "Site", "exp"))
 
-sigintseveregi<-filter(ints, pvalint<0.05)
+sigintsGI<-filter(ints, pvalint<0.05)
 
 
 #severeGI- interaction tests are with other GI models
@@ -62,6 +62,15 @@ comresultseveregi<-comresultseveregi[, c(-1, -3, -7, -14)]
 names(comresultseveregi)[8]<-"Age"
 names(comresultseveregi)[9]<-"Site"
 names(comresultseveregi)[10]<-"Indicator"
+
+
+#filter significant effects for children
+sigeffs<-comresultseveregi%>%
+  dplyr::filter(Coef>1,  p<0.05, Age!="age13up" & Age!="age18up" & Age!="allages")
+
+ints<-merge( sigeffs, giint, by=c("Outcome", "Indicator", "Age", "Site", "exp"))
+
+sigintseveregi<-filter(ints, pvalint<0.05)
 
 
 
@@ -107,3 +116,4 @@ sigintsresp<-filter(ints, pvalint<0.05)
 allints<-rbind.data.frame(sigintsGI, sigintseveregi, sigintsresp)
 
 write.csv(allints, file="C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/interactiontests/siginteractions.csv", row.names=FALSE)
+
