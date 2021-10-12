@@ -7,6 +7,7 @@
 
 *need to re run with venfest dropped!
 
+*corrected outcome macro that was not saved properly
 
 
 
@@ -83,7 +84,7 @@ foreach site in allsites risknotrop neearall notropical neearps neearcore risk{
 						putexcel A`j'="`site'"
 						putexcel B`j'="`swim'"
 						putexcel C`j'="`exp'"
-						putexcel D`j'="`gi'"
+						putexcel D`j'="`ill'"
 						putexcel E`j'="`age'"
 						putexcel F`j'="`subset'"
 				
