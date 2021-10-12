@@ -17,6 +17,7 @@ comresultsGI$exp<-ifelse(comresultsGI$exposure=="30 minutes", "water30", comresu
 comresultsGI$exp<-ifelse(comresultsGI$exposure=="45 minutes", "water45", comresultsGI$exp)
 comresultsGI$exp<-ifelse(comresultsGI$exposure=="60 minutes", "water60", comresultsGI$exp)
 
+
 giint<-read_excel("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/interactiontests/giinteractiontests.xlsx")
 
 
@@ -34,7 +35,7 @@ names(comresultsGI)[9]<-"Site"
 names(comresultsGI)[10]<-"Indicator"
 
 giint$Indicator=ifelse(giint$Indicator=="avgdyentero1600", "cfu", "pcr")
-
+giint$Site=ifelse(giint$Site=="risknotrop", "risknotropical", giint$Site)
 
 #filter significant effects for children
 sigeffs<-comresultsGI%>%
@@ -43,7 +44,6 @@ sigeffs<-comresultsGI%>%
 ints<-merge( sigeffs, giint, by=c("Outcome", "Indicator", "Age", "Site", "exp"))
 
 sigintsGI<-filter(ints, pvalint<0.05)
-
 
 #severeGI- interaction tests are with other GI models
 #main models are in different file
@@ -57,12 +57,10 @@ comresultseveregi$exp<-ifelse(comresultseveregi$exposure=="30 minutes", "water30
 comresultseveregi$exp<-ifelse(comresultseveregi$exposure=="45 minutes", "water45", comresultseveregi$exp)
 comresultseveregi$exp<-ifelse(comresultseveregi$exposure=="60 minutes", "water60", comresultseveregi$exp)
 
-
 comresultseveregi<-comresultseveregi[, c(-1, -3, -7, -14)]
 names(comresultseveregi)[8]<-"Age"
 names(comresultseveregi)[9]<-"Site"
 names(comresultseveregi)[10]<-"Indicator"
-
 
 #filter significant effects for children
 sigeffs<-comresultseveregi%>%
@@ -71,9 +69,6 @@ sigeffs<-comresultseveregi%>%
 ints<-merge( sigeffs, giint, by=c("Outcome", "Indicator", "Age", "Site", "exp"))
 
 sigintseveregi<-filter(ints, pvalint<0.05)
-
-
-
 
 #respiratory
 
@@ -87,7 +82,6 @@ comresultsresp$exp<-ifelse(comresultsresp$exposure=="45 minutes", "water45", com
 comresultsresp$exp<-ifelse(comresultsresp$exposure=="60 minutes", "water60", comresultsresp$exp)
 
 respint<-read_excel("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/interactiontests/respinteractiontests.xlsx")
-
 
 names(respint)[2]<-"exp"
 names(respint)[7]<-"ORint"
@@ -103,7 +97,7 @@ names(comresultsresp)[9]<-"Site"
 names(comresultsresp)[10]<-"Indicator"
 
 respint$Indicator=ifelse(respint$Indicator=="avgdyentero1600", "cfu", "pcr")
-
+respint$Site=ifelse(respint$Site=="risknotrop", "risknotropical", respint$Site)
 
 #filter significant effects for children
 sigeffs<-comresultsresp %>%
