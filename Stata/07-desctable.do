@@ -1,4 +1,6 @@
 *add non human site
+*ad sore throat, cough and cold
+
 
 set more off
 capture log close
@@ -37,6 +39,10 @@ tab diarrhea
 tab severegi
 tab hcresp
 tab rash
+tab sorethroat
+tab cough
+tab cold
+
 
 * risk
 
@@ -57,7 +63,9 @@ tab diarrhea if  risk==1
 tab severegi if  risk==1
 tab hcresp if  risk==1
 tab rash if  risk==1
-
+tab sorethroat if  risk==1
+tab cough if  risk==1
+tab cold if  risk==1
 
 * risk no trop
 
@@ -78,7 +86,9 @@ tab diarrhea if risknotrop==1
 tab severegi if  risknotrop==1
 tab hcresp if  risknotrop==1
 tab rash if  risknotrop==1
-
+tab sorethroat if  risknotrop==1
+tab cough if risknotrop==1
+tab cold if  risknotrop==1
 
 
 * neear all
@@ -100,7 +110,9 @@ tab diarrhea if neearall==1
 tab severegi if  neearall==1
 tab hcresp if  neearall==1
 tab rash if  neearall==1
-
+tab sorethroat if  neearall==1
+tab cough if  neearall==1
+tab cold if  neearall==1
 
 
 * neear point source
@@ -122,6 +134,9 @@ tab diarrhea if neearps==1
 tab severegi if  neearps==1
 tab hcresp if  neearps==1
 tab rash if  neearps==1
+tab sorethroat if  neearps==1
+tab cough if  neearps==1
+tab cold if  neearps==1
 
 
 * neear core
@@ -143,6 +158,9 @@ tab diarrhea if neearcore==1
 tab severegi if  neearcore==1
 tab hcresp if  neearcore==1
 tab rash if  neearcore==1
+tab sorethroat if  neearcore==1
+tab cough if  neearcore==1
+tab cold if  neearcore==1
 
 
 
@@ -166,6 +184,9 @@ tab diarrhea if nonhuman==1
 tab severegi if  nonhuman==1
 tab hcresp if  nonhuman==1
 tab rash if  nonhuman==1
+tab sorethroat if  nonhuman==1
+tab cough if  nonhuman==1
+tab cold if  nonhuman==1
 
 
 
