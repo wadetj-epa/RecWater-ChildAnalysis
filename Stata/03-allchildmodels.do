@@ -1,7 +1,7 @@
 *add correct cuts which repeated rash
 * add groups for adults 13 and up, 18 and up
 * add non-human impacted site group (risk==0)
-
+* add age groups 6-10 and 6-12 4-10 and 4-12
 
 capture program drop allchildmodels
 program define allchildmodels
@@ -18,7 +18,8 @@ if inlist("`subset'", "allsites", "risk", "risknotropical", "notropical", "neear
     exit 198
 }
 
-if inlist("`agegroup'", "allages", "age10", "age12", "age8", "age6", "age4", "age13up", "age18up")==0 {
+*if inlist("`agegroup'", "allages", "age10", "age12", "age8", "age6", "age4", "age13up", "age18up", "age610")==0 & "`agegroup'"!="age612" {
+if regexm("`agegroup'", "(^allages$|^age10$|^age12$|^age8$|^age6$|^age4$|^age13up$|^age18up$|^age610$|^age612$|^age410$|^age412$)")==0 {
 	display as err "option agegroup() invalid"
     exit 198
 }
@@ -238,7 +239,34 @@ set more off
 
 	}
 	
+	if "`agegroup'"=="age610" {
+
+		keep if age>=6 & age<=10
+
+	}
+	
+	if "`agegroup'"=="age612" {
+
+		keep if age>=6 & age<=12
+
+	}
+	
+	if "`agegroup'"=="age412" {
+
+		keep if age>=4 & age<=12
+
+	}
+
+	if "`agegroup'"=="age410" {
+
+		keep if age>=4 & age<=10
+
+	}
+	
+	
 		
+	
+			
 		*run models
 		
 		
