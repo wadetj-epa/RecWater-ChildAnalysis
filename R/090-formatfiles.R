@@ -1,9 +1,10 @@
 library(readxl)
 #add in results for adults
 #add in nonhuman results 
+#add alternate age groups
 sink(file="C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresults.log")
 
-ages<-c("allages", "age10", "age12", "age8", "age6", "age4", "age13up", "age18up")
+ages<-c("allages", "age10", "age12", "age8", "age6", "age4", "age13up", "age18up", "age410", "age412", "age610", "age612")
 sites<-c("allsites", "risk", "risknotropical", "notropical", "neearall", "neearcore", "neearps", "nonhuman")
 inds<-c("cfu", "pcr")
 comresults<-NULL
