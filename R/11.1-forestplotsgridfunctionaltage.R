@@ -2,6 +2,7 @@
 #corrected label- over 18 to 18 and over
 #added alt function for different color pattern (forplotgrid1alt)
 #edit to filter out desired ages, etc.
+#forest plot grid plots for alternate ages
 
 rm(list=ls())
 library(data.table)
@@ -10,25 +11,23 @@ library(dplyr)
 library(tidyr)
 
 
-
-#comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
+agelabels=c("6 and under", "10 and under", "Ages 4-10", "Ages 4-12", "Ages 6-10", "Ages 6-12", "18 and over", "All ages")
 
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
-#all ages, 18 and over, 12, 10 and 8
-forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
-    filter(ind==indicator, Outcome==outcome,  age!="age8" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
+    filter(ind==indicator, Outcome==outcome,  age!="age4" & age!="age8" & age!="age12" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
     
     ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
     geom_errorbar()+
     #geom_point(aes(color=age), size=3.8, shape=15)+
     geom_point(aes(color=age), size=3.2)+
     #scale_shape_manual(values=c(15,15,15, 15, 15, 15)) +
-    scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen", "black"),
-                       labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
+    scale_color_manual(values=c('red', 'green', 'orange', "grey", "blue", "darkgreen", "black", "yellow"),
+                       labels=agelabels)+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -51,11 +50,11 @@ forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savenam
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
 #all ages, 18 and over, 12, 10 and 8
-forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotgrid1age2alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
-    filter(ind==indicator, Outcome==outcome,  age!="age8" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
+    filter(ind==indicator, Outcome==outcome,  age!="age4" & age!="age8" & age!="age12" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
     
     ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
     geom_errorbar()+
@@ -64,7 +63,7 @@ forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, save
     #scale_shape_manual(values=c(15,15,15, 15, 15, 15)) +
     #scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen", "black"),
                       # labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
-    scale_color_brewer(palette="Set1", labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
+    scale_color_brewer(palette="Set1", labels=agelabels)+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -86,10 +85,6 @@ forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, save
 }
 
 comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
-#filter to keep original age groups
-comresults<-dplyr::filter(comresults, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
-
-
 
 
 ticks<-c(seq(.2, .8, by =.2), seq(1, 3.8, by=.5), seq(4, 9.5, by=1), seq(10, 100, by =10))
@@ -114,20 +109,18 @@ roottemp<-"C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_W
 for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
       
-      filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
-      filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+      filetemp<-paste(roottemp, outlist[j], indlist[i],"age2", ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
-      forplotgrid1(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-      forplotgrid1alt(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+      forplotgrid1age2(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
+      forplotgrid1age2alt(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
       
       }
   }
 
 
 comresultsresp<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsresp.rds")
-#filter to keep original age groups
-comresultsresp<-dplyr::filter(comresultsresp, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
 
 indlist<-c("cfu", "pcr")
 outlist<-c("cough", "cold", "hcresp", "sorethroat")
@@ -137,20 +130,18 @@ rm(list=c("i","j"))
 for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
       
-      filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
-      filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+      filetemp<-paste(roottemp, outlist[j], indlist[i], "age2", ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
-      forplotgrid1(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-      forplotgrid1alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+      forplotgrid1age2(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
+      forplotgrid1age2alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
       
       }
   }
 
 
 comresultseveregi<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.rds")
-#filter to keep original age groups
-comresultseveregi<-dplyr::filter(comresultseveregi, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
 
 ticks<-c(seq(.2, .8, by =.2), seq(1, 7, by=2),  seq(10, 100, by =10))
 
@@ -162,13 +153,13 @@ rm(list=c("i","j"))
 for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
     
-    filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
-    filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+    filetemp<-paste(roottemp, outlist[j], indlist[i], "age2", ".pdf", sep="")   
+    filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
     
     indtemp<-indlist[i]
     outtemp<-outlist[j]
-    forplotgrid1(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-    forplotgrid1alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+    forplotgrid1age2(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
+    forplotgrid1age2alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
     }
 }
 
@@ -190,12 +181,12 @@ rm(list=c("i","j"))
 for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
     
-    filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
-    filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+    filetemp<-paste(roottemp, outlist[j], indlist[i], "age2", ".pdf", sep="")   
+    filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
     indtemp<-indlist[i]
     outtemp<-outlist[j]
-    forplotgrid1(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-    forplotgrid1alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+    forplotgrid1age2(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
+    forplotgrid1age2alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
     }
 }
 

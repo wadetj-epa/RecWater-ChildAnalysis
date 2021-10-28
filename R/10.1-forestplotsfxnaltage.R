@@ -1,9 +1,12 @@
+#forest plots for alternate age groups
+
 #need to set up data before running plots
 #RDS files created and formatted for plotting by crcomresultsforplot.R
 #cvs files saved by formatfiles.R
 #add non human to function
 #edit plots to have dots instead of box symbols
 #added alternate color schemes (forplotalt)
+#creates modified functions to save alternate age grous (age2)
 
 rm(list=ls())
 library(data.table)
@@ -13,16 +16,18 @@ library(tidyr)
 
 
 #plotting function
+#age!="age4" & age!="age8", age!="age12", age!="age13up"
+agelabels=c("6 and under", "10 and under", "Ages 4-10", "Ages 4-12", "Ages 6-10", "Ages 6-12", "18 and over", "All ages")
 
-forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotage2=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
     ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
     geom_errorbar()+
     geom_point(aes(color=age), size=4)+
-    scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
-                       labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+    scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black", "yellow"),
+                       labels=agelabels)+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -44,7 +49,7 @@ forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, sa
 }
 
 
-forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotage2alt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
@@ -53,7 +58,7 @@ forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE,
     geom_point(aes(color=age), size=4)+
     #scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
                        #labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
-    scale_color_brewer(palette="Set1",labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+    scale_color_brewer(palette="Set1",labels=agelabels)+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -78,8 +83,8 @@ forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE,
 
 
 comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
-#filter to keep original age groups
-comresults<-dplyr::filter(comresults, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
+#filter to keep alternate age groups
+comresults<-dplyr::filter(comresults, age!="age4" & age!="age8", age!="age12", age!="age13up")
 
 dodger = position_dodge(width = 0.3)
 
@@ -99,21 +104,21 @@ for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
     for(k in 1:length(sitelist)) {
    
-  filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
-  filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="") 
+  filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
+  filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="") 
    indtemp<-indlist[i]
    outtemp<-outlist[j]
    sitetemp<-sitelist[k]
-   forplot(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-   forplotalt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+   forplotage2(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+   forplotage2alt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
    
     }
   }
 }
 
 comresultsresp<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsresp.rds")
-#filter to keep original age groups
-comresultsresp<-dplyr::filter(comresultsresp, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
+#filter to keep alternate age groups
+comresultsresp<-dplyr::filter(comresultsresp, age!="age4" & age!="age8", age!="age12", age!="age13up")
 
 dodger = position_dodge(width = 0.3)
 
@@ -136,20 +141,20 @@ for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
     for(k in 1:length(sitelist)) {
       
-      filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
-      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="") 
+      filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="") 
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplot(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotalt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      forplotage2(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+      forplotage2alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
       }
   }
 }
 
 comresultseveregi<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.rds")
-#filter to keep original age groups
-comresultseveregi<-dplyr::filter(comresultseveregi, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
+#filter to keep alternate age groups
+comresultseveregi<-dplyr::filter(comresultseveregi, age!="age4" & age!="age8", age!="age12", age!="age13up")
 
 
 dodger = position_dodge(width = 0.3)
@@ -169,21 +174,21 @@ for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
     for(k in 1:length(sitelist)) {
       
-      filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
-      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="")   
+      filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplot(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotalt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      forplotage2(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+      forplotage2alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
       }
   }
 }
 
 
 comresultsrash<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsrash.rds")
-#filter to keep original age groups
-comresultsrash<-dplyr::filter(comresultsrash, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
+#filter to keep alternate age groups
+comresultsrash<-dplyr::filter(comresultsrash, age!="age4" & age!="age8", age!="age12", age!="age13up")
 
 
 dodger = position_dodge(width = 0.3)
@@ -204,14 +209,14 @@ for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {
     for(k in 1:length(sitelist)) {
       
-      filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
-      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="")   
+      filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
+      filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="")   
       
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplotalt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplot(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+      forplotage2alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+      forplotage2(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
     }
   }
 }

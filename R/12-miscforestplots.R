@@ -1,6 +1,7 @@
 #miscellaneous forest plots
 #corrected label for 18 and over and 13 and over
 # add plots comparing non human site
+# drop age4- now all ages included in main comresults files
 
 rm(list=ls())
 library(data.table)
@@ -10,16 +11,13 @@ library(tidyr)
 
 
 
-comresultsrespage4<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsrespage4.rds")
+comresultsresp<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsresp.rds")
+comresultsresp<-dplyr::filter(comresultsresp, exposure!='45 minutes')
+
 comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
+comresults<-dplyr::filter(comresults, exposure!='45 minutes')
 
 
-comresultsage4<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgiage4.rds")
-
-
-# comresultsrespage4 %>%
-#   filter(ind=="pcr", Outcome=="sorethroat", exposure=="Swallowed water", site!="notropical", age=="age4") 
-  
 
 site.labs=c('allsites'="All sites", 'neearall'="All NEEAR", 'neearcore'="Core NEEAR",
             'neearps'="NEEAR Point source", 'risknotropical'="Human source\n(no tropical)", 'risk'="Human source", 'notropical'="All sites\n(no tropical)", 'nonhuman'="Non-human source")
@@ -32,7 +30,7 @@ ticks<-c(seq(.1, 1.9, by =.1), seq(2, 3.8, by=.2), seq(4, 9.5, by=0.5), seq(10, 
 
 #ticks<-c(seq(.2, .8, by =.2), seq(1, 7, by=2),  seq(10, 100, by =10))
 
-comresultsrespage4 %>%
+comresultsresp %>%
   filter(ind=="pcr", Outcome=="hcresp", site=="neearcore"|site=="risknotropical"|site=="allsites", age=="age4") %>%
   ggplot(aes(x = exposure, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -50,7 +48,7 @@ comresultsrespage4 %>%
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/respage4.pdf", scale=1.1, width=12, height=8)
 
 
-comresultsrespage4 %>%
+comresultsresp %>%
   filter(ind=="cfu", Outcome=="cough", site=="neearcore"|site=="risknotropical"|site=="allsites", age=="age4") %>%
   ggplot(aes(x = exposure, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -68,7 +66,7 @@ comresultsrespage4 %>%
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/coughage4cfu.pdf", scale=1.1, width=12, height=8)
 
   
-comresultsrespage4 %>%
+comresultsresp %>%
   filter(ind=="pcr", Outcome=="hcresp", site=="neearcore"|site=="risknotropical"|site=="allsites", age=="age4"|age=="age6"|age=="age10"|age=="age18up", exposure=="60 minutes") %>%
   ggplot(aes(x = age, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -86,7 +84,7 @@ comresultsrespage4 %>%
 
 
 #age and site
-comresultsage4 %>%
+comresults %>%
   filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical" & site!="nonhuman") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -107,7 +105,7 @@ ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Wate
 
 
 #age and site- with non-human
-comresultsage4 %>%
+comresults %>%
   filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -130,7 +128,7 @@ ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Wate
 
 
 #age and site- with non-human- alt color
-comresultsage4 %>%
+comresults %>%
   filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -152,7 +150,7 @@ ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Wate
 
 
 #age and site- with non-human- alt color
-comresultsage4 %>%
+comresults %>%
   filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -175,7 +173,7 @@ ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Wate
 
 
 #age and site- with non-human- alt color
-comresultsage4 %>%
+comresults%>%
   filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
@@ -199,7 +197,7 @@ ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Wate
 
 
 #age and site- with non-human- alt color
-comresultsage4 %>%
+comresults %>%
   filter(ind=="pcr", Outcome=="diarrhea", age=="age6"|age=="age10"|age=="age8"|age=="age18up"|age=="age13up", exposure=="Body immersion", site!="notropical") %>%
   ggplot(aes(x = site, y = Coef, ymin=Lower, ymax=Upper)) +
   geom_errorbar()+
