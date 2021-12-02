@@ -2,6 +2,7 @@
 #corrected label- over 18 to 18 and over
 #added alt function for different color pattern (forplotgrid1alt)
 #edit to filter out desired ages, etc.
+#swap facets x and y axis
 
 rm(list=ls())
 library(data.table)
@@ -22,23 +23,23 @@ forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savenam
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
     filter(ind==indicator, Outcome==outcome,  age!="age8" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
     
-    ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
+    ggplot(aes(x = age, y = Coef, ymin=Lower, ymax=Upper)) +
     geom_errorbar()+
     #geom_point(aes(color=age), size=3.8, shape=15)+
     geom_point(aes(color=age), size=3.2)+
     #scale_shape_manual(values=c(15,15,15, 15, 15, 15)) +
     scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen", "black"),
                        labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
-    scale_x_log10(breaks=ticks, labels = ticks) +
+    scale_y_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
     #               position = dodger,
     #              size = .5) +
-    geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
-    labs(y = "", x = "Odds Ratio") +
+    geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+    labs(x = "", y = "Odds Ratio") +
     theme_bw()+ 
-    facet_grid(exposure~site, switch = "y", labeller=labeller(site=site.labs))+
-    theme(axis.text.y=element_blank(), axis.ticks = element_blank(), axis.text.x=element_text(angle=45, hjust=1))+
+    facet_grid(exposure~site, switch = "x", labeller=labeller(site=site.labs))+
+    theme(axis.text.x.bottom=element_blank(), axis.ticks = element_blank(), axis.text.x=element_text(angle=45, hjust=1))+
     guides(color=guide_legend("Age group", reverse=TRUE))
     if(print==TRUE) print(p)
     
@@ -57,7 +58,7 @@ forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, save
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
     filter(ind==indicator, Outcome==outcome,  age!="age8" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
     
-    ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
+    ggplot(aes(x = age, y = Coef, ymin=Lower, ymax=Upper)) +
     geom_errorbar()+
     #geom_point(aes(color=age), size=3.8, shape=15)+
     geom_point(aes(color=age), size=3.2)+
@@ -65,15 +66,15 @@ forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, save
     #scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen", "black"),
                       # labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
     scale_color_brewer(palette="Set1", labels=c("6 and under", "10 and under", "12 and under", "18 and over", "All ages"))+
-    scale_x_log10(breaks=ticks, labels = ticks) +
+    scale_y_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
     #               position = dodger,
     #              size = .5) +
-    geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
-    labs(y = "", x = "Odds Ratio") +
+    geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
+    labs(x = "", y = "Odds Ratio") +
     theme_grey()+ 
-    facet_grid(exposure~site, switch = "y", labeller=labeller(site=site.labs))+
+    facet_grid(exposure~site, switch = "x", labeller=labeller(site=site.labs))+
     theme(axis.text.y=element_blank(), axis.ticks = element_blank(), axis.text.x=element_text(angle=45, hjust=1))+
     guides(color=guide_legend("Age group", reverse=TRUE))
   if(print==TRUE) print(p)
@@ -109,7 +110,7 @@ i<-NULL
 j<-NULL
 #rm(list=c("i","j")) 
 
-roottemp<-"C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/grids/"
+roottemp<-"C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/grids/axswap/"
 
 for(i in 1:length(indlist)) {
   for(j in 1:length(outlist)) {

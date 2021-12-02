@@ -1,6 +1,7 @@
 #read in combined results to assess significant interaction effects
 #criteria-main effect is significant in original model
 #one or more interaction effects are significant
+#edited to use up to date comresults
 
 #note outputs did not get read in correctly for respiratory interaction
 
@@ -8,7 +9,7 @@
 library(dplyr)
 library(readxl)
 library(tidyr)
-comresultsGI<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsGIage4.rds")
+comresultsGI<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsGI.rds")
 comresultsGI$p=comresultsGI$'p-value'
 comresultsGI$exp<-ifelse(comresultsGI$exposure=="Any contact", "anycontact", NA)
 comresultsGI$exp<-ifelse(comresultsGI$exposure=="Body immersion", "bodycontact", comresultsGI$exp)
@@ -48,7 +49,7 @@ sigintsGI<-filter(ints, pvalint<0.05)
 #severeGI- interaction tests are with other GI models
 #main models are in different file
 
-comresultseveregi<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregiage4.rds")
+comresultseveregi<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.rds")
 comresultseveregi$p=comresultseveregi$'p-value'
 comresultseveregi$exp<-ifelse(comresultseveregi$exposure=="Any contact", "anycontact", NA)
 comresultseveregi$exp<-ifelse(comresultseveregi$exposure=="Body immersion", "bodycontact", comresultseveregi$exp)
@@ -72,7 +73,7 @@ sigintseveregi<-filter(ints, pvalint<0.05)
 
 #respiratory
 
-comresultsresp<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsrespage4.rds")
+comresultsresp<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsresp.rds")
 comresultsresp$p=comresultsresp$'p-value'
 comresultsresp$exp<-ifelse(comresultsresp$exposure=="Any contact", "anycontact", NA)
 comresultsresp$exp<-ifelse(comresultsresp$exposure=="Body immersion", "bodycontact", comresultsresp$exp)
