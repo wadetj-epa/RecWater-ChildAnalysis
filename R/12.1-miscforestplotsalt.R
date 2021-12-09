@@ -4,6 +4,7 @@
 # use alternating color scheme
 # drop age4- now all ages included in main comresults files
 # added some plots with alternate age groups
+#change color scheme per Ben's recommendation
 
 rm(list=ls())
 library(data.table)
@@ -44,7 +45,8 @@ comresultsresp %>%
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen"))+
-  scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
+  #scale_color_brewer(palette="Set1")+
   scale_y_log10(breaks=ticks, labels = ticks) +
    geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -63,7 +65,8 @@ comresultsresp %>%
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', 'orange', "grey", "blue", "darkgreen"))+
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -82,7 +85,8 @@ comresultsresp %>%
   geom_point(aes(color=age), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15)) +
   #scale_color_manual(values=c('red', 'orange', "blue", "grey"))+
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -102,7 +106,8 @@ comresults %>%
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"),
    #                  labels=c(site.labs))+
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -124,7 +129,8 @@ comresults%>%
   scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
    #                 labels=c(site.labs))+
-  scale_color_brewer(palette="Set1",labels=c(site.labs))+
+  #scale_color_brewer(palette="Set1",labels=c(site.labs))+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -145,7 +151,8 @@ comresults %>%
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"))+
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -164,7 +171,8 @@ comresults %>%
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"))+
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -182,7 +190,8 @@ comresults %>%
   geom_errorbar()+
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
  #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"))+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
@@ -202,7 +211,8 @@ comresults %>%
   geom_errorbar()+
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"))+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
@@ -226,7 +236,8 @@ comresults %>%
   geom_point(aes(color=exposure), size=4)+
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"))+
-  scale_color_brewer(palette="Set1")+
+  #scale_color_brewer(palette="Set1")+
+  scale_color_brewer(type="qual", palette=2)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -249,7 +260,7 @@ comresults %>%
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey"), labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   #scale_fill_discrete(name="Test", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
-  scale_color_brewer(palette="Set1", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
+  scale_color_brewer(type="qual", palette=2, labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
   labs(y = "", x = "Odds Ratio") +
@@ -269,7 +280,7 @@ comresults %>%
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey"), labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   #scale_fill_discrete(name="Test", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
-  scale_color_brewer(palette="Set1", labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
+  scale_color_brewer(type="qual", palette=2, labels=c("Diarrhea", "NEEAR-GI", "Stomachache", "Vomiting"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   geom_vline(xintercept = 1.0, linetype = "dotted", size = 1) +
   labs(y = "", x = "Odds Ratio") +
@@ -288,7 +299,7 @@ comresults %>%
     geom_point(aes(color=age), size=4)+
     #scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
     #labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
-    scale_color_brewer(palette="Set1",labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+    scale_color_brewer(type="qual", palette=2,labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
     scale_x_log10(breaks=ticks, labels = ticks) +
     #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
     #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -314,7 +325,7 @@ comresults %>%
   geom_point(aes(color=age), size=4)+
   #scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
   #labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
-  scale_color_brewer(palette="Set1",labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+  scale_color_brewer(type="qual", palette=2,labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
   #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -338,7 +349,7 @@ comresults %>%
   geom_point(aes(color=age), size=4)+
   #scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
   #labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
-  scale_color_brewer(palette="Set1",labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+  scale_color_brewer(type="qual", palette=2,labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
   #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -364,7 +375,7 @@ comresults %>%
   geom_point(aes(color=age), size=4)+
   #scale_color_manual(values=c('red','green', 'orange', "grey", "blue", "darkgreen", "black"),
   #labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
-  scale_color_brewer(palette="Set1",labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
+  scale_color_brewer(type="qual", palette=2,labels=c("6 and under", "8 and under", "10 and under", "12 and under", "13 and over", "18 and over", "All ages"))+
   scale_x_log10(breaks=ticks, labels = ticks) +
   #scale_fill_discrete(name="Age group", labels=c("4 and under", "6 and under", "8 and under", "10 and under", "12 and under", "All ages"))
   #geom_pointrange(aes(xmin = Lower, xmax = Upper),
@@ -390,7 +401,7 @@ comresults %>%
   #scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"),
   #                  labels=c(site.labs))+
-  scale_color_brewer(palette="Set1", labels=site.labs)+
+  scale_color_brewer(type="qual", palette=2, labels=site.labs)+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -412,7 +423,7 @@ comresults%>%
   scale_shape_manual(values=c(15,15,15, 15, 15)) +
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
   #                 labels=c(site.labs))+
-  scale_color_brewer(palette="Set1",labels=c(site.labs))+
+  scale_color_brewer(type="qual", palette=2,labels=c(site.labs))+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +

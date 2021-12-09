@@ -2,6 +2,7 @@
 #corrected label- over 18 to 18 and over
 #added alt function for different color pattern (forplotgrid1alt)
 #edit to filter out desired ages, etc.
+#edit to filter out exposure 45 minutes
 #forest plot grid plots for alternate ages
 
 rm(list=ls())
@@ -85,6 +86,7 @@ forplotgrid1age2alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, 
 }
 
 comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
+comresults<-dplyr::filter(comresults, exposure!="45 minutes")
 
 
 ticks<-c(seq(.2, .8, by =.2), seq(1, 3.8, by=.5), seq(4, 9.5, by=1), seq(10, 100, by =10))
@@ -121,6 +123,7 @@ for(i in 1:length(indlist)) {
 
 
 comresultsresp<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsresp.rds")
+comresultsresp<-dplyr::filter(comresultsresp, exposure!="45 minutes")
 
 indlist<-c("cfu", "pcr")
 outlist<-c("cough", "cold", "hcresp", "sorethroat")
@@ -142,6 +145,8 @@ for(i in 1:length(indlist)) {
 
 
 comresultseveregi<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultseveregi.rds")
+comresultseveregi<-dplyr::filter(comresultseveregi, exposure!="45 minutes")
+
 
 ticks<-c(seq(.2, .8, by =.2), seq(1, 7, by=2),  seq(10, 100, by =10))
 
@@ -167,7 +172,7 @@ for(i in 1:length(indlist)) {
 
 comresultsrash<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsrash.rds")
 #filter to keep original age groups
-comresultsrash<-dplyr::filter(comresultsrash, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
+comresultsrash<-dplyr::filter(comresultsrash, exposure!="45 minutes")
 
 
 
