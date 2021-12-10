@@ -4,6 +4,7 @@
 #edit to filter out desired ages, etc.
 #edit to filter out exposure 45 minutes
 #forest plot grid plots for alternate ages
+#add eps plots for PLOS one
 
 rm(list=ls())
 library(data.table)
@@ -16,7 +17,7 @@ agelabels=c("6 and under", "10 and under", "Ages 4-10", "Ages 4-12", "Ages 6-10"
 
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
-forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL,savenameeps=NULL,  savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
@@ -44,6 +45,7 @@ forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, sav
     
     if(save==TRUE) {
       ggsave(savename, scale=savesize, width=12, height=8)
+      ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
     }
     
     rm(p)
@@ -51,7 +53,7 @@ forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, sav
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
 #all ages, 18 and over, 12, 10 and 8
-forplotgrid1age2alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotgrid1age2alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
@@ -80,6 +82,7 @@ forplotgrid1age2alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, 
   
   if(save==TRUE) {
     ggsave(savename, scale=savesize, width=12, height=8)
+    ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
   }
   
   rm(p)
@@ -113,10 +116,13 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], indlist[i],"age2", ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], indlist[i],"age2", ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".eps", sep="")   
+      
       indtemp<-indlist[i]
       outtemp<-outlist[j]
-      forplotgrid1age2(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-      forplotgrid1age2alt(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+      forplotgrid1age2(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+      forplotgrid1age2alt(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
       
       }
   }
@@ -135,10 +141,12 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], indlist[i], "age2", ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], indlist[i],"age2", ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".eps", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
-      forplotgrid1age2(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-      forplotgrid1age2alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+      forplotgrid1age2(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+      forplotgrid1age2alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
       
       }
   }
@@ -160,11 +168,13 @@ for(i in 1:length(indlist)) {
     
     filetemp<-paste(roottemp, outlist[j], indlist[i], "age2", ".pdf", sep="")   
     filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
+    filetempeps<-paste(roottemp, outlist[j], indlist[i],"age2", ".eps", sep="")   
+    filetempalteps<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".eps", sep="")   
     
     indtemp<-indlist[i]
     outtemp<-outlist[j]
-    forplotgrid1age2(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-    forplotgrid1age2alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+    forplotgrid1age2(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+    forplotgrid1age2alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
     }
 }
 
@@ -188,10 +198,13 @@ for(i in 1:length(indlist)) {
     
     filetemp<-paste(roottemp, outlist[j], indlist[i], "age2", ".pdf", sep="")   
     filetempalt<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".pdf", sep="")   
+    filetempeps<-paste(roottemp, outlist[j], indlist[i],"age2", ".eps", sep="")   
+    filetempalteps<-paste(roottemp, outlist[j], indlist[i], "age2", "alt", ".eps", sep="")   
+    
     indtemp<-indlist[i]
     outtemp<-outlist[j]
-    forplotgrid1age2(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-    forplotgrid1age2alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+    forplotgrid1age2(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp,savenameeps=filetempeps, savesize=1.1, print=FALSE)
+    forplotgrid1age2alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
     }
 }
 

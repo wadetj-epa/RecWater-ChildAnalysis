@@ -2,6 +2,7 @@
 #corrected label for 18 and over and 13 and over
 # add plots comparing non human site
 # drop age4- now all ages included in main comresults files
+#add eps files
 
 rm(list=ls())
 library(data.table)
@@ -46,6 +47,7 @@ comresultsresp %>%
   guides(color=guide_legend("Exposure"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/respage4.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/respage4.eps", device="eps",width=11, height=7.25, units="in")
 
 
 comresultsresp %>%
@@ -64,6 +66,7 @@ comresultsresp %>%
   guides(color=guide_legend("Exposure"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/coughage4cfu.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/coughage4cfu.eps", device="eps", width=1, height=7.25, unit="in")
 
   
 comresultsresp %>%
@@ -101,6 +104,7 @@ comresults %>%
   guides(color=guide_legend("Site"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbody.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbody.eps", width=11, height=7.25, device="eps", unit="in")
 
 
 
@@ -147,6 +151,7 @@ comresults %>%
   guides(color=guide_legend("Site"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset1.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset1.eps", device="eps", width=11, height=7.25, unit="in")
 
 
 #age and site- with non-human- alt color
@@ -169,6 +174,7 @@ comresults %>%
   guides(color=guide_legend("Site"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumandark2.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumandark2.eps", width=11, height=7.5, device="eps", unit="in")
 
 
 
@@ -192,6 +198,7 @@ comresults%>%
   guides(color=guide_legend("Site"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset2.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset2.pdf", width=11, height=7.5, device="eps", unit="in")
 
 
 
@@ -216,6 +223,7 @@ comresults %>%
   guides(color=guide_legend("Site"))
 
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset1grey.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrbodynonhumanset1grey.eps", width=11, height=7.5, device="eps", unit="in")
 
 
 
@@ -238,6 +246,7 @@ comresults %>%
   theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
   guides(color=guide_legend("Exposure"))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage12.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage12.eps", device="eps",  width=11, height=7.5, unit="in")
 
 
 
@@ -256,6 +265,7 @@ comresults %>%
   theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
   guides(color=guide_legend("Exposure"))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage8.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage8.eps", width=11, height=7.5, device="eps", unit="in")
 
 
 
@@ -274,6 +284,7 @@ comresults %>%
   theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
   guides(color=guide_legend("Exposure"))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage10.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheapcrage10.eps", width=11, height=7.5, device="eps", unit="in")
 
 
 ticks<-c(seq(.1, 1.9, by =.1), seq(2, 3.8, by=.2), seq(4, 9.5, by=0.5), seq(10, 100, by =10))
@@ -297,6 +308,8 @@ comresults %>%
   theme(axis.text.x=element_blank(), axis.ticks = element_blank(), axis.text.y=element_text(angle=45, hjust=1))+
   guides(color=guide_legend("Exposure"))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheacfuage12.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/diarrheacfuage12.eps",  width=11, height=7.5, device="eps", unit="in")
+
 
 ticks<-c(seq(.2, .8, by =.2), seq(1, 3.8, by=.5), seq(4, 9.5, by=1), seq(10, 100, by =10))
 
@@ -319,6 +332,7 @@ comresults %>%
   theme(axis.text.y=element_blank(), axis.ticks = element_blank(), axis.text.x=element_text(angle=45, hjust=1))+
   guides(color=guide_legend(reverse=TRUE))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/giwater60pcr.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/giwater60pcr.eps", device="eps", unit="in", width=11, height=7.5)
 
 
 
@@ -338,4 +352,7 @@ comresults %>%
   theme(axis.text.y=element_blank(), axis.ticks = element_blank(), axis.text.x=element_text(angle=45, hjust=1))+
   guides(color=guide_legend(reverse=TRUE))
 ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/giwater60cfu.pdf", scale=1.1, width=12, height=8)
+ggsave("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/forestplots/misc/giwater60cfu.eps",  width=11, height=7.5, unit="in", device="eps")
+
+
 

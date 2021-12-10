@@ -2,6 +2,7 @@
 #corrected label- over 18 to 18 and over
 #added alt function for different color pattern (forplotgrid1alt)
 #edit to filter out desired ages, etc.
+#edited to add eps file for PLOS One
 
 rm(list=ls())
 library(data.table)
@@ -16,7 +17,7 @@ library(tidyr)
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
 #all ages, 18 and over, 12, 10 and 8
-forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
@@ -44,6 +45,7 @@ forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savenam
     
     if(save==TRUE) {
       ggsave(savename, scale=savesize, width=12, height=8)
+      ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
     }
     
     rm(p)
@@ -51,7 +53,7 @@ forplotgrid1=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savenam
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
 #all ages, 18 and over, 12, 10 and 8
-forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
@@ -80,6 +82,7 @@ forplotgrid1alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, save
   
   if(save==TRUE) {
     ggsave(savename, scale=savesize, width=12, height=8)
+    ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
   }
   
   rm(p)
@@ -116,10 +119,12 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], indlist[i], ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], indlist[i], "alt", ".eps", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
-      forplotgrid1(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-      forplotgrid1alt(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+      forplotgrid1(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+      forplotgrid1alt(dat=comresults, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
       
       }
   }
@@ -139,10 +144,14 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], indlist[i], ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], indlist[i], "alt", ".eps", sep="")   
+      
+      
       indtemp<-indlist[i]
       outtemp<-outlist[j]
-      forplotgrid1(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-      forplotgrid1alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+      forplotgrid1(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+      forplotgrid1alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
       
       }
   }
@@ -164,11 +173,13 @@ for(i in 1:length(indlist)) {
     
     filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
     filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+    filetempeps<-paste(roottemp, outlist[j], indlist[i], ".eps", sep="")   
+    filetempalteps<-paste(roottemp, outlist[j], indlist[i], "alt", ".eps", sep="")   
     
     indtemp<-indlist[i]
     outtemp<-outlist[j]
-    forplotgrid1(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-    forplotgrid1alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+    forplotgrid1(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+    forplotgrid1alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
     }
 }
 
@@ -192,10 +203,12 @@ for(i in 1:length(indlist)) {
     
     filetemp<-paste(roottemp, outlist[j], indlist[i], ".pdf", sep="")   
     filetempalt<-paste(roottemp, outlist[j], indlist[i], "alt", ".pdf", sep="")   
+    filetempeps<-paste(roottemp, outlist[j], indlist[i], ".eps", sep="")   
+    filetempalteps<-paste(roottemp, outlist[j], indlist[i], "alt", ".eps", sep="")   
     indtemp<-indlist[i]
     outtemp<-outlist[j]
-    forplotgrid1(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savesize=1.1, print=FALSE)
-    forplotgrid1alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savesize=1.1, print=FALSE)
+    forplotgrid1(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.1, print=FALSE)
+    forplotgrid1alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.1, print=FALSE)
     }
 }
 
