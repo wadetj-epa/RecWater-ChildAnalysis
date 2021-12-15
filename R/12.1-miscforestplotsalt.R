@@ -110,7 +110,7 @@ comresults %>%
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black"),
    #                  labels=c(site.labs))+
   #scale_color_brewer(palette="Set1")+
-  scale_color_brewer(type="qual", palette=2)+
+  scale_color_brewer(type="qual", palette=2, labels=c(site.labs))+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
@@ -134,7 +134,7 @@ comresults%>%
   #scale_color_manual(values=c('red', "orange", "blue", "grey", "darkgreen", "black", "lightgreen"),
    #                 labels=c(site.labs))+
   #scale_color_brewer(palette="Set1",labels=c(site.labs))+
-  scale_color_brewer(type="qual", palette=2)+
+  scale_color_brewer(type="qual", palette=2, labels=c(site.labs))+
   scale_y_log10(breaks=ticks, labels = ticks) +
   geom_hline(yintercept = 1.0, linetype = "dotted", size = 1) +
   labs(x = "", y = "Odds Ratio") +
