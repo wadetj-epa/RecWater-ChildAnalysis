@@ -19,7 +19,7 @@ library(tidyr)
 #age!="age4" & age!="age8", age!="age12", age!="age13up"
 agelabels=c("6 and under", "10 and under", "Ages 4-10", "Ages 4-12", "Ages 6-10", "Ages 6-12", "18 and over", "All ages")
 
-forplotage2=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotage2=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
@@ -43,13 +43,15 @@ forplotage2=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE
     
     if(save==TRUE) {
       ggsave(savename, scale=savesize)
+      ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
+      
     }
   
     rm(p)
 }
 
 
-forplotage2alt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotage2alt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL,  savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
@@ -74,6 +76,8 @@ forplotage2alt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FA
   
   if(save==TRUE) {
     ggsave(savename, scale=savesize)
+    ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
+    
   }
   
   rm(p)
@@ -106,11 +110,14 @@ for(i in 1:length(indlist)) {
    
   filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
   filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="") 
-   indtemp<-indlist[i]
+  filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".eps", sep="")   
+  filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".eps", sep="") 
+  
+  indtemp<-indlist[i]
    outtemp<-outlist[j]
    sitetemp<-sitelist[k]
-   forplotage2(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-   forplotage2alt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+   forplotage2(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+   forplotage2alt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt,savenameeps=filetempalteps, savesize=1.7, print=FALSE)
    
     }
   }
@@ -143,11 +150,14 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="") 
+      filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".eps", sep="") 
+      
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplotage2(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotage2alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      forplotage2(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+      forplotage2alt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
       }
   }
 }
@@ -176,11 +186,14 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".eps", sep="") 
+      
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplotage2(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotage2alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      forplotage2(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+      forplotage2alt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
       }
   }
 }
@@ -211,12 +224,14 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "age2", "alt", ".eps", sep="") 
       
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplotage2alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotage2(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+      forplotage2alt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+      forplotage2(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
     }
   }
 }

@@ -4,6 +4,7 @@
 #add non human to function
 #edit plots to have dots instead of box symbols
 #added alternate color schemes (forplotalt)
+#save files as eps for PLOS One
 
 rm(list=ls())
 library(data.table)
@@ -14,7 +15,7 @@ library(tidyr)
 
 #plotting function
 
-forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
@@ -38,13 +39,14 @@ forplot=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, sa
     
     if(save==TRUE) {
       ggsave(savename, scale=savesize)
+      ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
     }
   
     rm(p)
 }
 
 
-forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savesize=NULL, print=TRUE) {
+forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     filter(ind==indicator, Outcome==outcome, site==sitetype) %>%
@@ -69,6 +71,7 @@ forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE,
   
   if(save==TRUE) {
     ggsave(savename, scale=savesize)
+    ggsave(savenameeps, width=11, height=7.25, units="in", device="eps")
   }
   
   rm(p)
@@ -101,11 +104,13 @@ for(i in 1:length(indlist)) {
    
   filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
   filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="") 
-   indtemp<-indlist[i]
+  filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".eps", sep="")   
+  filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".eps", sep="") 
+  indtemp<-indlist[i]
    outtemp<-outlist[j]
    sitetemp<-sitelist[k]
-   forplot(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-   forplotalt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+   forplot(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+   forplotalt(dat=comresults, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
    
     }
   }
@@ -138,11 +143,14 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="") 
+      filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".eps", sep="") 
+      
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplot(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotalt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      forplot(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+      forplotalt(dat=comresultsresp, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
       }
   }
 }
@@ -171,11 +179,13 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".eps", sep="")   
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplot(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplotalt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savesize=1.7, print=FALSE)
+      forplot(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+      forplotalt(dat=comresultseveregi, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetempalt, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
       }
   }
 }
@@ -206,12 +216,14 @@ for(i in 1:length(indlist)) {
       
       filetemp<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".pdf", sep="")   
       filetempalt<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".pdf", sep="")   
+      filetempeps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], ".eps", sep="")   
+      filetempalteps<-paste(roottemp, outlist[j], sitelist[k], indlist[i], "alt", ".eps", sep="")   
       
       indtemp<-indlist[i]
       outtemp<-outlist[j]
       sitetemp<-sitelist[k]
-      forplotalt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
-      forplot(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savesize=1.7, print=FALSE)
+      forplotalt(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempeps, savesize=1.7, print=FALSE)
+      forplot(dat=comresultsrash, indicator=indtemp, outcome=outtemp, sitetype=sitetemp, save=TRUE, savename=filetemp, savenameeps=filetempalteps, savesize=1.7, print=FALSE)
     }
   }
 }
