@@ -5,6 +5,8 @@
 #edit to filter out exposure 45 minutes
 #forest plot grid plots for alternate ages
 #add eps plots for PLOS one
+#change 6 and under to 4 and under since 6 and under is already in main text
+#change 10 and under to 8 and under since 10 and under shown in main text
 
 rm(list=ls())
 library(data.table)
@@ -13,7 +15,7 @@ library(dplyr)
 library(tidyr)
 
 
-agelabels=c("6 and under", "10 and under", "Ages 4-10", "Ages 4-12", "Ages 6-10", "Ages 6-12", "18 and over", "All ages")
+agelabels=c("4 and under", "8 and under", "Ages 4-10", "Ages 4-12", "Ages 6-10", "Ages 6-12", "18 and over", "All ages")
 
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
@@ -21,7 +23,7 @@ forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, sav
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
-    filter(ind==indicator, Outcome==outcome,  age!="age4" & age!="age8" & age!="age12" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
+    filter(ind==indicator, Outcome==outcome,  age!="age6" & age!="age10" & age!="age12" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
     
     ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
     geom_errorbar()+
@@ -52,12 +54,12 @@ forplotgrid1age2=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, sav
 }
 
 #forplotgrid1- all sites, core neear, human source (no tropcical)
-#all ages, 18 and over, 12, 10 and 8
+#all ages, 18 and over, 12, 10 and 4
 forplotgrid1age2alt=function(dat, indicator, outcome, expfilt=NULL, save=FALSE, savename=NULL, savenameeps=NULL, savesize=NULL, print=TRUE) {
   if(exists("p")) rm(p)
   p<-dat %>%
     #filter(ind==indicator, Outcome==outcome,  age!="age8", site=="allsites"|site=="risk"|site=="neearcore"|site=="risknotropical")%>%
-    filter(ind==indicator, Outcome==outcome,  age!="age4" & age!="age8" & age!="age12" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
+    filter(ind==indicator, Outcome==outcome,  age!="age6" & age!="age10" & age!="age12" & age!="age13up", site=="allsites"|site=="neearcore"|site=="risknotropical")%>%
     
     ggplot(aes(y = age, x = Coef, xmin=Lower, xmax=Upper)) +
     geom_errorbar()+
