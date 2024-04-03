@@ -78,8 +78,6 @@ forplotalt=function(dat, indicator, outcome, sitetype, expfilt=NULL, save=FALSE,
 }
 
 
-
-
 comresults<-readRDS("C:/Users/twade/OneDrive - Environmental Protection Agency (EPA)/Rec_Water/ChildAnalysis/Results/comresultsgi.rds")
 #filter to keep original age groups
 comresults<-dplyr::filter(comresults, age!="age4" & age!="age410" & age!="age412" & age!="age610" & age!="age612")
