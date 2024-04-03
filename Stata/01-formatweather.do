@@ -1,13 +1,23 @@
 *see R programs 01-pre-WeatherforCABeaches.R
 
-import delimited using "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\CAbeachesWeather.csv", clear
+import delimited using "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\California Beaches\CAbeachesWeather_corrected.csv", clear varnames(1)
 qui bysort beach date: gen count=_N
+tab count
+
 *drop if report_type=="SOM" & count==2
 *drop count
 
 *qui bysort beach date: gen count=_N
 
 keep beach date dailyaveragedrybulbtemperature  dailyaveragewindspeed dailyprecipitation lag1_ppt
+
+foreach var of varlist _all {
+	replace `var'="." if `var'=="NA"
+}
+
+foreach var of varlist dailyaveragedrybulbtemperature  dailyaveragewindspeed dailyprecipitation lag1_ppt {
+	destring `var', replace force
+}
 
 
 gen stdate=substr(date, 1, 10)
@@ -28,32 +38,32 @@ replace beachg=3 if beach=="Doheny"
 replace beachg=8 if beach=="Malibu"
 replace beachg=9 if beach=="Mission Bay"
 
-
-qui bysort beachg date: gen count2=_N
-*drop if missing(dailyaveragedrybulbtemperature) & count2>1
-*qui bysort beachg date: gen count3=_N
-*tab count3
-
 drop count*
 
+*corrected weather has few missing
+/*
+  +--------------------------------------------+
+  |                                  # missing |
+  |--------------------------------------------|
+  | dailyaveragedrybulbtemperature           1 |
+  |             dailyprecipitation           2 |
+  |          dailyaveragewindspeed           4 |
+  |                       lag1_ppt           3 |
+*/
 
-*replace missing values with previous non missing for precipitation and temp
 
-sort beachg intdate
-*gen otemp=dailyaveragedrybulbtemperature
-
-bys beach: replace dailyaveragedrybulbtemperature = dailyaveragedrybulbtemperature[_n-1] if dailyaveragedrybulbtemperature >= .
-
-*gen oppt=dailyprecipitation
+*replace missing values with previous non missing 
 
 bys beach: replace dailyprecipitation = dailyprecipitation[_n-1] if dailyprecipitation >= .
-
+bys beach: replace dailyaveragedrybulbtemperature = dailyaveragedrybulbtemperature[_n-1] if dailyaveragedrybulbtemperature >= .
+bys beach: replace dailyaveragewindspeed = dailyaveragewindspeed[_n-1] if dailyaveragewindspeed >= .
 bys beach: replace lag1_ppt = lag1_ppt[_n-1] if lag1_ppt >= .
 
 save "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\recweather.dta", replace
 
 clear
 
+*use epi data to get dates
 use "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\recwaterepi.dta"
 
 keep beachg intdate meanairtemp rain8
@@ -74,7 +84,8 @@ gen tempdrybulbC= (dailyaveragedrybulbtemperature-32)* 5/9
 *list tempdrybulbC if beachg==1
 gen temp=meanairtemp
 replace temp= tempdrybulbC if missing(temp)
-table beachg, c(min temp mean temp max temp)
+*table beachg, c(min temp mean temp max temp)
+table beachg, stat(min temp) stat(mean temp) stat(max temp)
 
 capture drop stdtemp 
 gen stdtemp=.
