@@ -1,4 +1,6 @@
 *see R programs 01-pre-WeatherforCABeaches.R
+*note following merge confirmed that precipitation is only missing for days that like either health data or water quality data for vast majority
+*however it may be of interest to fill in missing precipitation for days with health data at some point but not done here
 
 import delimited using "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\California Beaches\CAbeachesWeather_corrected.csv", clear varnames(1)
 qui bysort beach date: gen count=_N
