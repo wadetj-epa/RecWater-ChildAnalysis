@@ -1,7 +1,10 @@
 
 *GM-470/300; STV-2000/1280 
 *probably need to account for missing watertime, very few observations but need to re run all models
-
+*updated with corrected weather data-archived file saved as recwaterepi_old.dta
+*models not re-run with new weather data
+*also note error with severe gi- doctor not considered correctly
+*generated new variable severegidoc
 
 
 capture clear
@@ -35,8 +38,6 @@ rename beach beach2
 
 tempfile ancil
 save `ancil', replace
-
-
 
 
 *read in  human marker data
@@ -145,6 +146,7 @@ replace severe=. if missing(diarrheadays) & missing(vomitingdays) & missing(naus
 gen doctor=cond(hospitalized_gas==1 | emergencyroom_gas==1 | visitdoc_gas==1, 1, 0)
 replace doctor=. if missing(hospitalized_gas) & missing(emergencyroom_gas) & missing(visitdoc_gas)
 
+*note severe gi does not include dr. visit
 gen severegi=0
 replace severegi=1 if hcgi==1 & severe==1
 replace severegi=1 if diarrhea==1 & severe==1
@@ -152,9 +154,23 @@ replace severegi=1 if vomiting==1 & severe==1
 replace severegi=1 if stomach==1 & severe==1
 replace severegi=. if missing(hcgi)
 
+gen severegidoc=0
+replace severegidoc=1 if hcgi==1 & (severe==1 | doctor==1)
+replace severegidoc=1 if diarrhea==1 & (severe==1 | doctor==1)
+replace severegidoc=1 if vomiting==1 & (severe==1 | doctor==1)
+replace severegidoc=1 if stomach==1 & (severe==1 | doctor==1)
+replace severegidoc=. if missing(hcgi)
+
+gen gidoc=0
+replace gidoc=1 if hcgi==1 & doctor==1
+replace gidoc=1 if diarrhea==1 & doctor==1
+replace gidoc=1 if vomiting==1 & doctor==1
+replace gidoc=1 if stomach==1 & doctor==1
+replace gidoc=. if missing(hcgi)
+
 * severity info not collected at mission bay
 replace severegi=. if beachg==9
-
+replace severegidoc=. if beachg==9
 
 replace venfest=0 if missing(venfest)
 
