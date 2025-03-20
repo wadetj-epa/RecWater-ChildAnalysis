@@ -5,6 +5,12 @@
 *models not re-run with new weather data
 *also note error with severe gi- doctor not considered correctly
 *generated new variable severegidoc
+*10/11/2024 use updated data file with swam variable not missing at CA beaches
+*need to correct entero data and swimming variable for neear beaches
+*created new geomeans geomeans_entero_new with geomeans for 2009 beaches
+*need to correct swam variable for Mission Bay
+*bodycontact, anycontact, coded differently in 13 beaches data set, missing values were set to 0 (?)
+*merged and saved original variables as anycontact_o bodycontact_o , etc.
 
 
 capture clear
@@ -21,7 +27,6 @@ use "L:\Lab\NHEERL_TWade\Tim\Rec_water\EPA_studies\data\healthenteroqpcr.dta" , 
 qui bysort beach intdate: keep if _n==1
 
 keep beach intdate meanairtemp meanbathers rain8
-
 
 gen beachg=2 if beach=="BB"
 replace beachg=4 if beach=="EB"
@@ -59,7 +64,10 @@ tempfile waterq
 save `waterq'
 clear
 
-use "L:\Lab\Nheerl_HSF_Beaches\13Beaches\Download31418\13beaches-epi.dta"
+*use update data file
+*use "L:\Lab\Nheerl_HSF_Beaches\13Beaches\Download31418\13beaches-epi.dta"
+use "L:\Lab\Nheerl_HSF_Beaches\13Beaches\Updated 8-10-16\final\13beaches-epi.dta"
+
 
 gen byte hcgi = (diarrhea==1) | (vomiting==1) | (nausea==1 & stomach==1) | (nausea==1 & stopdaily_gas==1) | (stomach==1 & stopdaily_gas==1)
 replace hcgi=. if missing(diarrhea) & missing(vomiting) & missing(nausea) & missing(stomach)
@@ -95,6 +103,8 @@ replace risk = 0 if beach=="Surfside"
 label define riskl 1 "High" 0 "Low"
 label values risk riskl
 
+
+*water quality data has same time stamp- 12/17/2015 so should be OK
 merge m:1 beach beachcode coldate using "L:\Lab\Nheerl_HSF_Beaches\13Beaches\Download31418\13beaches-wq.dta"
 
 tabulate _merge
@@ -185,10 +195,102 @@ replace water45=0 if anycontact==0
 
 gen water60=watertime>60
 replace water60=0 if anycontact==0
+*make data corrections-
+
+*swimming variables and milescat for NEEAR sites
+tempfile rec1
+save `rec1'
+
+use "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\healthfinal.dta"
+
+gen beach_old=beach
+replace beach="Boqueron" if beach=="BB"
+replace beach="Surfside" if beach=="MB"
+replace beach="Edgewater" if beach=="EB"
+replace beach="Fairhope" if beach=="FB"
+replace beach="Goddard" if beach=="GB"
+replace beach ="Huntington" if beach=="HB"
+replace beach="Silver" if beach=="SB"
+replace beach="Washington Park" if beach=="WP"
+replace beach="West" if beach=="WB"
 
 
+
+foreach var of varlist anycontact bodycontact headunder swallwater {
+gen `var'_o=`var'
+}
+
+keep indid anycontact_o bodycontact_o headunder_o swallwater_o milescat
+
+tempfile neear
+save `neear'
+
+clear
+
+use `rec1'
+
+merge 1:1 indid using `neear'
+tab _merge
+drop _merge
+tempfile rec1
+save `rec1', replace
+
+*mb_swam corrections
+
+use "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\California Beaches\mb_swam_correct.dta", clear
+rename fullid indid
+tostring ind, replace
+drop hhid beach sdate
+tempfile mb
+save `mb'
+
+clear
+use `rec1', clear
+merge 1:1 indid using `mb', update replace
+tab _merge
+keep if _merge==1
+drop _merge
+tempfile rec1
+save `rec1', replace
+
+
+
+*update geomeans 
+use "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\geomeans_entero_new.dta", clear
+tempfile entero
+save `entero'
+clear
+
+use `rec1', clear
+gen date=intdate
+merge m:1 beach date using `entero'
+tab _merge
+drop if _merge==2
+
+
+replace log10mean_epcr=avgdyenteropcr if _merge==1
+replace log10mean_cfu=avgdyentero1600 if _merge==1
+
+drop _merge
 save "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\recwaterepi.dta", replace
 export delimited  using "C:\Users\twade\OneDrive - Environmental Protection Agency (EPA)\Rec_Water\recwaterepi.txt", nolabel replace
+
+
+/*demonstrate RWQC results-
+
+drop if inlist(beach, "Avalon", "Boqueron", "Doheny", "Malibu", "Surfside")
+drop if venfest==1
+keep if gibase~=1 & vomitbase~=1
+gen exp=log10mean_epcr
+replace exp=0 if bodycontact_o==0
+gen swimtemp=bodycontact_o
+xi : glm hcgi swimtemp exp i.beach milescat age, link(identity) family(binomial) vce(cluster hhid)
+
+*same as in RWQC 2012
+
+*/
+
+
 
 
 
